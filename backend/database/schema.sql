@@ -1,0 +1,9 @@
+-- CSDL chính được quản lý bằng Alembic trong backend/alembic.
+-- File này là bản tóm tắt ERD vật lý để đọc nhanh.
+-- users -> auth_sessions
+-- categories -> products -> inventory
+-- customers -> invoices -> invoice_items
+-- purchase_receipts -> purchase_receipt_items
+-- products -> stock_movements
+-- audit_logs, ai_logs
+-- Các bảng dùng tên tiếng Anh snake_case theo MASTER_SPEC_V3.1.

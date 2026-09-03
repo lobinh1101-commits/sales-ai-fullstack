@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #eef2ff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(99, 102, 241, .12), transparent 26%),
+    radial-gradient(circle at 88% 0%, rgba(236, 72, 153, .10), transparent 24%),
+    radial-gradient(circle at 76% 88%, rgba(14, 165, 233, .10), transparent 26%),
+    #f6f7fb;
+}
+button, input, select, textarea { font: inherit; }
+::selection { background: rgba(99, 102, 241, .22); color: #312e81; }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#a5b4fc, #c4b5fd); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(#818cf8, #a78bfa); }
+
+.app-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.soft-grid-pattern {
+  background-image:
+    linear-gradient(rgba(99,102,241,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.table-shell { overflow-x: auto; }
+.table-shell table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.table-shell th {
+  padding: 13px 16px;
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: #64748b;
+  background: linear-gradient(180deg, #fafaff 0%, #f6f7ff 100%);
+  border-bottom: 1px solid #e9eafb;
+}
+.table-shell td {
+  padding: 16px;
+  border-bottom: 1px solid #f0f1f7;
+  font-size: 14px;
+  color: #334155;
+  background: rgba(255,255,255,.78);
+  transition: background .2s ease, transform .2s ease;
+}
+.table-shell tbody tr:last-child td { border-bottom: 0; }
+.table-shell tbody tr:hover td { background: #f8f7ff; }
+.table-shell tbody tr:hover td:first-child { box-shadow: inset 3px 0 0 #7c3aed; }
+
+.glass-panel {
+  background: rgba(255,255,255,.74);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.gradient-text {
+  background: linear-gradient(92deg, #4338ca 0%, #7c3aed 48%, #db2777 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
