@@ -26,3 +26,6 @@ npm-debug.log*
 # Windows / OS
 .DS_Store
 Thumbs.db
+
+# Local curl cookie files
+cookies*.txt
