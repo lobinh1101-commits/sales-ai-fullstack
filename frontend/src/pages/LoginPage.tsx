@@ -12,21 +12,31 @@ const roleTone = [
 ]
 
 export function LoginPage() {
-  const { user, login } = useAuth()
+  const { user, login, initializing } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [username, setUsername] = useState('admin')
   const [password, setPassword] = useState('Admin@12345')
   const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  if (user) return <Navigate to="/dashboard" replace />
+  if (!initializing && user) return <Navigate to="/dashboard" replace />
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!login(username, password)) {
+
+    setError('')
+    setIsSubmitting(true)
+
+    const ok = await login(username, password)
+
+    setIsSubmitting(false)
+
+    if (!ok) {
       setError('Tên đăng nhập hoặc mật khẩu không đúng.')
       return
     }
+
     const state = location.state as { from?: string } | null
     navigate(state?.from ?? '/dashboard', { replace: true })
   }
@@ -110,7 +120,7 @@ export function LoginPage() {
                   <Sparkles size={12} /> Đăng nhập hệ thống
                 </div>
                 <h2 className="mt-3 text-3xl font-black tracking-[-0.035em] text-slate-950">Chào mừng trở lại</h2>
-                <p className="mt-2 text-sm font-medium leading-6 text-slate-500">Đăng nhập bằng tài khoản demo để xem giao diện theo từng vai trò.</p>
+                <p className="mt-2 text-sm font-medium leading-6 text-slate-500">Đăng nhập bằng tài khoản hệ thống để truy cập dữ liệu theo đúng vai trò.</p>
               </div>
 
               <form onSubmit={submit} className="space-y-4">
@@ -141,12 +151,15 @@ export function LoginPage() {
 
                 {error && <div className="rounded-2xl border border-rose-100 bg-gradient-to-r from-rose-50 to-pink-50 px-4 py-3 text-sm font-bold text-rose-700">{error}</div>}
 
-                <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 px-4 py-3.5 text-sm font-black text-white shadow-[0_14px_35px_rgba(124,58,237,.28)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(124,58,237,.36)]">
-                  Đăng nhập <ArrowRight size={18} />
+                <button
+                  disabled={isSubmitting || initializing}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 px-4 py-3.5 text-sm font-black text-white shadow-[0_14px_35px_rgba(124,58,237,.28)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(124,58,237,.36)] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting ? 'Đang đăng nhập...' : 'Đăng nhập'} <ArrowRight size={18} />
                 </button>
               </form>
 
-              <div className="my-6 flex items-center gap-3"><div className="h-px flex-1 bg-gradient-to-r from-transparent to-violet-200" /><span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Tài khoản demo</span><div className="h-px flex-1 bg-gradient-to-r from-violet-200 to-transparent" /></div>
+              <div className="my-6 flex items-center gap-3"><div className="h-px flex-1 bg-gradient-to-r from-transparent to-violet-200" /><span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Tài khoản mẫu</span><div className="h-px flex-1 bg-gradient-to-r from-violet-200 to-transparent" /></div>
 
               <div className="grid gap-2.5 sm:grid-cols-3">
                 {demoUsers.map((account, index) => (
@@ -165,7 +178,7 @@ export function LoginPage() {
                 ))}
               </div>
             </div>
-            <p className="mt-5 text-center text-xs font-medium leading-5 text-slate-400">Dữ liệu hiện tại chỉ dùng để trình diễn giao diện. Dữ liệu chính thức sẽ do backend/PostgreSQL cung cấp.</p>
+            <p className="mt-5 text-center text-xs font-medium leading-5 text-slate-400">Đăng nhập được xác thực bởi FastAPI và PostgreSQL; quyền truy cập được áp dụng theo vai trò tài khoản.</p>
           </div>
         </section>
       </div>

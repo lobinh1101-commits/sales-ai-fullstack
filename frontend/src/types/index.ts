@@ -1,5 +1,12 @@
 export type Role = 'ADMIN' | 'SALES' | 'OWNER'
 
+export type AuthUser = {
+  id: number
+  fullName: string
+  username: string
+  role: Role
+}
+
 export type DemoUser = {
   id: number
   fullName: string
